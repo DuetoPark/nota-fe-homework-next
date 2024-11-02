@@ -1,0 +1,37 @@
+:root {
+  --primary-normal: #0066ff;
+  --static-white: #fff;
+}
+
+.button {
+  background-color: var(--primary-normal);
+  color: var(--static-white);
+
+  font-size: 15px;
+  line-height: 1.467;
+  letter-spaceing: 0.0096em;
+  font-weight: 700;
+  height: 40px;
+  padding: 9px 20px;
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 6px;
+  transition: background-color 150ms ease-in-out, color 150ms ease-in-out,
+    border-color 150ms ease-in-out, filter 150ms ease-in-out;
+}
+
+.button:hover:not(:disabled) {
+  filter: brightness(0.925);
+}
+
+.button:active:not(:disabled) {
+  filter: brightness(0.82);
+  transform: translateY(1px);
+}
+
+.button:focus:not(:disabled) {
+  filter: brightness(0.88);
+}
