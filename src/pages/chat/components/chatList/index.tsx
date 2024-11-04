@@ -1,70 +1,47 @@
-import axios from 'axios';
-import { useEffect } from 'react';
+import { useState } from 'react';
 import classNames from 'classnames/bind';
-import { useNavigate, useParams } from 'react-router-dom';
-
-import { useChatStore } from '@/store/chat';
-import { ChatDataType } from '@/type/chat';
-import Button from '@/components/atoms/Button';
+import { useParams } from 'react-router-dom';
+import { ChatDataType } from '@/models/chat';
 
 import styles from './chatList.module.css';
 
+interface ChatListPropsType {
+  chatList: ChatDataType[];
+  onClick?: (chatId: string) => void;
+}
+
 const cx = classNames.bind(styles);
 
-type GetChatsFuncType = () => Promise<ChatDataType[]>;
-
-const getChats: GetChatsFuncType = async () => {
-  return await axios.get('/chats').then((res) => res.data.data);
-};
-
-const ChatList = () => {
-  const { currentChatId, setCurrentChatId, chatList, setChatList, setClick } = useChatStore();
-  const navigate = useNavigate();
+const ChatList = ({ chatList, onClick }: ChatListPropsType) => {
   const { chatId } = useParams();
+  const [activeChatId, setActiveChatId] = useState<string>('');
 
-  useEffect(() => {
-    getChats().then((data) => {
-      setChatList(data);
-    });
-  }, []);
+  if (chatList.length === 0) return <p>채팅 리스트가 없습니다.</p>;
 
   return (
-    <section>
-      <h2>ChatList</h2>
+    <ol>
+      {chatList &&
+        chatList.map((item) => (
+          <li key={item.chat_id}>
+            <article
+              id={item.chat_id}
+              className={cx(chatId === item.chat_id && 'isActive')}
+              onClick={() => {
+                // 이전과 동일한 채팅을 선택한 경우
+                if (activeChatId === item.chat_id) return;
+                setActiveChatId(item.chat_id);
 
-      <Button
-        onClick={() => {
-          setCurrentChatId('');
-          navigate('/');
-          setClick();
-        }}
-      >
-        추가하기
-      </Button>
-
-      <ol>
-        {chatList &&
-          chatList.map((item) => (
-            <li key={item.chat_id}>
-              <article
-                onClick={() => {
-                  if (chatId === item.chat_id) return;
-
-                  navigate(`/${item.chat_id}`);
-                  setCurrentChatId(item.chat_id);
-                }}
-                id={item.chat_id}
-                className={cx(
-                  (currentChatId == item.chat_id || chatId == item.chat_id) && 'isActive',
-                )}
-              >
-                <h3>{item.dialogues[0].prompt}</h3>
-                <p>{item.chat_model_name}</p>
-              </article>
-            </li>
-          ))}
-      </ol>
-    </section>
+                // 클릭 이벤트
+                if (!onClick) return;
+                onClick(item.chat_id);
+              }}
+            >
+              <h3>{item.dialogues[0].prompt}</h3>
+              <p>[{item.chat_model_name}]</p>
+            </article>
+          </li>
+        ))}
+    </ol>
   );
 };
 
