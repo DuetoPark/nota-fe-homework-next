@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { ChatDataType } from '@/type/chat';
+import { ChatDataType } from '@/models/chat';
 import { CHAT_LIST_INIT, NEW_CHAT_ID } from '@/pages/chat/constants';
 
 type ChatType = {
