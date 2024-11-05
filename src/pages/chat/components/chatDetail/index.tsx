@@ -7,6 +7,7 @@ import useChatQuery from '@/hooks/queries/useChatQuery';
 import { useChatStore } from '@/store/chat';
 import { DIALOGUES_INIT, MODEL_INIT, PROMPT_INIT } from '../../constants';
 import Button from '@/components/atoms/Button';
+import Textarea from '@/components/atoms/Textarea';
 import ModelSelect from './ModelSelect';
 import Dialoguelist from './DialogList';
 
@@ -102,15 +103,14 @@ const ChatDetail = () => {
       {chatQuery && chatQuery?.dialogues && <Dialoguelist dialogueList={chatQuery?.dialogues} />}
 
       <form action="">
-        <textarea
+        <Textarea
           name=""
-          cols="30"
-          rows="10"
-          placeholder="메세지를 입력하세요"
+          onTextInput={(message) => {
+            setText(message);
+          }}
           disabled={!model}
-          onInput={(e) => setText(e.target.value)}
-          value={text}
-        ></textarea>
+          placeholder="메세지를 입력하세요"
+        />
 
         <Button type="button" onClick={addDialogue} disabled={!model}>
           프롬프트 보내기
