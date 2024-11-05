@@ -6,7 +6,7 @@ interface ApiType {
   GetChats: () => Promise<ChatDataType[]>;
   GetChat: (chatId: string) => Promise<ChatDataType>;
   GetModels: () => Promise<ModelDataType[]>;
-  AddChat: (chatId: string, prompt: string) => Promise<DialogueType[]>;
+  AddDialogue: (chatId: string, prompt: string) => Promise<DialogueType[]>;
 }
 
 // 채팅방 생성
@@ -30,6 +30,8 @@ export const getModels: ApiType['GetModels'] = async () => {
 };
 
 // 특정 채팅에 대화 추가
-export const addChat: ApiType['AddChat'] = async (chatId, prompt) => {
-  return await apiRequest.post(`/chats/${chatId}/dialogues`, { prompt });
+export const addDialogue: ApiType['AddDialogue'] = async (chatId, prompt) => {
+  return await apiRequest
+    .post(`/chats/${chatId}/dialogues`, { prompt })
+    .then((res) => res.dialogues);
 };

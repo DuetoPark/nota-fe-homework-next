@@ -6,7 +6,7 @@ import ChatDetail from './components/chatDetail';
 import ChatList from './components/chatList';
 
 const Chat = () => {
-  const { setCurrentChatId, setClick } = useChatStore();
+  const { setClick } = useChatStore();
   const navigate = useNavigate();
 
   const { isLoading, data: chatsQuery } = useChatsQuery();
@@ -20,7 +20,6 @@ const Chat = () => {
           onClick={() => {
             navigate('/');
             setClick();
-            setCurrentChatId('');
           }}
         >
           추가하기
@@ -32,7 +31,6 @@ const Chat = () => {
             chatList={chatsQuery}
             onClick={(currentId) => {
               navigate(`/${currentId}`);
-              setCurrentChatId(currentId);
             }}
           />
         )}
