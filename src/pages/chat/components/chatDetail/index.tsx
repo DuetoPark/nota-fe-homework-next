@@ -17,22 +17,22 @@ const ChatDetail = () => {
 
   const [dialogues, setDialogues] = useState<any[] | null>(DIALOGUES_INIT);
   const [model, setModel] = useState<string>(MODEL_INIT);
-  const [text, setText] = useState<string>(PROMPT_INIT);
-  const { currentChatId, setCurrentChatId, setChatList, click } = useChatStore();
+  const [message, setMessage] = useState<string>(PROMPT_INIT);
+  const { setChatList, click } = useChatStore();
 
   const { isLoading: chatIsLoading, data: chatQuery } = useChatQuery(chatId ?? '');
   const { isLoading: modelsQueryIsLoading, data: modelsQuery } = useModelsQuery();
 
   // 대화 추가
   const addDialogue = () => {
-    if (!text.trim()) return;
+    if (!message.trim()) return;
 
-    if (!currentChatId) {
+    if (!chatId) {
       createChat(model)
         .then((res) => res.at(-1))
         .then((data) => {
           // data === 새로 생성한 chat 정보
-          addDialogue(data.chat_id, text)
+          addDialogue(data.chat_id, message)
             .then((res) => {
               const newDialog = res.dialogues.at(-1);
               setDialogues((prev) => {
@@ -45,15 +45,12 @@ const ChatDetail = () => {
             .then((data) => setChatList(data));
 
           return data;
-        })
-        .then((data) => {
-          setCurrentChatId(data.chat_id);
         });
 
       return;
     }
 
-    addDialogue(currentChatId, text).then((res) => {
+    addDialogue(chatId, message).then((res) => {
       const newDialog = res.dialogues.at(-1);
       setDialogues((prev) => [...prev, { ...newDialog }]);
     });
@@ -62,7 +59,7 @@ const ChatDetail = () => {
   // 추가하기 버튼 클릭할 때
   useEffect(() => {
     setModel(MODEL_INIT);
-    setText(PROMPT_INIT);
+    setMessage(PROMPT_INIT);
   }, [click]);
 
   // 모델 선택 값
@@ -74,14 +71,13 @@ const ChatDetail = () => {
 
   // 채팅방 이동시, 프롬프트 초기화
   useEffect(() => {
-    setText(PROMPT_INIT);
+    setMessage(PROMPT_INIT);
   }, [chatId]);
 
   return (
     <div>
       <h2>ChatDetail</h2>
 
-      {/* <p>currentChatId:{currentChatId}</p> */}
       <p>params:{chatId}</p>
       <p>model id: {chatQuery?.chat_model_id}</p>
       <p>model value: {model}</p>
@@ -94,7 +90,7 @@ const ChatDetail = () => {
           onSelectChange={(selectedModelId) => {
             navigate('/');
             setModel(selectedModelId);
-            setText(PROMPT_INIT);
+            setMessage(PROMPT_INIT);
           }}
         />
       )}
@@ -106,7 +102,7 @@ const ChatDetail = () => {
         <Textarea
           name=""
           onTextInput={(message) => {
-            setText(message);
+            setMessage(message);
           }}
           disabled={!model}
           placeholder="메세지를 입력하세요"

@@ -1,22 +1,18 @@
 import { create } from 'zustand';
 
 import { ChatDataType } from '@/models/chat';
-import { CHAT_LIST_INIT, NEW_CHAT_ID } from '@/pages/chat/constants';
+import { CHAT_LIST_INIT } from '@/pages/chat/constants';
 
 type ChatType = {
   click: boolean;
-  currentChatId: string;
   chatList: ChatDataType[] | null;
-  setCurrentChatId: (chatId: string) => void;
   setChatList: (chatData: ChatDataType[] | ChatDataType) => void;
   setClick: () => void;
 };
 
 const useChatStore = create<ChatType>()((set) => ({
   click: false,
-  currentChatId: NEW_CHAT_ID,
   chatList: CHAT_LIST_INIT,
-  setCurrentChatId: (chatID) => set(() => ({ currentChatId: chatID })),
   setChatList: (chatData) =>
     set((state) => {
       if (state.chatList) {
