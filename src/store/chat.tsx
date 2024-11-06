@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
-import { ChatDataType } from '@/models/chat';
 import { CHAT_LIST_INIT } from '@/pages/chat/constants';
+import type { ChatDataType } from '@/models/chat';
 
 type ChatType = {
   click: boolean;

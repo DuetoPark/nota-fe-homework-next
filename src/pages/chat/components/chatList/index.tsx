@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import classNames from 'classnames/bind';
 import { useParams } from 'react-router-dom';
-import { ChatDataType } from '@/models/chat';
+import type { ChatDataType } from '@/models/chat';
 
 import styles from './chatList.module.css';
 

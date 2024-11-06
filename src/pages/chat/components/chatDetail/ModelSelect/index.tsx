@@ -1,6 +1,6 @@
 import { SelectHTMLAttributes, useEffect, useState } from 'react';
 import { Select, Theme } from '@radix-ui/themes';
-import { ModelDataType } from '@/models/chat';
+import type { ModelDataType } from '@/models/chat';
 
 interface ModelSelectPropsType extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {
   modelList: ModelDataType[];

@@ -1,4 +1,4 @@
-import { DialogueType } from '@/models/chat';
+import type { DialogueType } from '@/models/chat';
 
 interface DialogueListPropsType {
   dialogueList: DialogueType[];
