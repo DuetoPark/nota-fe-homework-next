@@ -1,13 +1,13 @@
-import { TextareaHTMLAttributes, useCallback, useState } from 'react';
-import { PROMPT_INIT } from '@/pages/chat/constants';
+import { TextareaHTMLAttributes, useCallback, useEffect, useState } from 'react';
 import { debounce } from 'lodash';
 
 interface TextareaPropsType extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   onTextInput: (text: string) => void;
+  value: string;
 }
 
-const Textarea = ({ onTextInput, ...props }: TextareaPropsType) => {
-  const [text, setText] = useState<string>(PROMPT_INIT);
+const Textarea = ({ onTextInput, value, ...props }: TextareaPropsType) => {
+  const [text, setText] = useState<string>(value);
 
   const debounceUpdate = useCallback(
     debounce((text) => {
@@ -15,6 +15,10 @@ const Textarea = ({ onTextInput, ...props }: TextareaPropsType) => {
     }, 500),
     [],
   );
+
+  useEffect(() => {
+    setText(value);
+  }, [value]);
 
   return (
     <textarea

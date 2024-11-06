@@ -1,8 +1,8 @@
-import { ChatDataType, DialogueType, ModelDataType, NewChatDataType } from '@/models/chat';
+import { ChatDataType, DialogueType, ModelDataType } from '@/models/chat';
 import { apiRequest } from './axiosRequest';
 
 interface ApiType {
-  CreateChat: (modelId: string) => Promise<NewChatDataType>;
+  CreateChat: (modelId: string) => Promise<ChatDataType[]>;
   GetChats: () => Promise<ChatDataType[]>;
   GetChat: (chatId: string) => Promise<ChatDataType>;
   GetModels: () => Promise<ModelDataType[]>;
@@ -32,6 +32,6 @@ export const getModels: ApiType['GetModels'] = async () => {
 // 특정 채팅에 대화 추가
 export const addDialogue: ApiType['AddDialogue'] = async (chatId, prompt) => {
   return await apiRequest
-    .post(`/chats/${chatId}/dialogues`, { prompt })
+    .post<ChatDataType, { prompt: string }>(`/chats/${chatId}/dialogues`, { prompt })
     .then((res) => res.dialogues);
 };
