@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import classNames from 'classnames/bind';
-import { useParams } from 'react-router-dom';
+
+import useChatId from '@/hooks/useChatId';
+import { CHAT_ID_INIT } from '../../../constants';
 import type { ChatDataType } from '@/models/chat';
 
 import styles from './chatList.module.css';
@@ -13,8 +15,12 @@ interface ChatListPropsType {
 const cx = classNames.bind(styles);
 
 const ChatList = ({ chatList, onClick }: ChatListPropsType) => {
-  const { chatId } = useParams();
   const [activeChatId, setActiveChatId] = useState<string>('');
+  const { chatId } = useChatId((state) => {
+    if (state === CHAT_ID_INIT) {
+      setActiveChatId(CHAT_ID_INIT);
+    }
+  });
 
   if (chatList.length === 0) return <p>채팅 리스트가 없습니다.</p>;
 
