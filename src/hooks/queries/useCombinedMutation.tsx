@@ -1,21 +1,20 @@
 import { useQueryClient } from '@tanstack/react-query';
 import useDialoguesMutation from './useDialogueMutation';
 import useNewChatMutation from './useNewChatMutation';
-import { useNavigate } from 'react-router-dom';
 
 interface AddNewChatPropsType {
   modelId: string;
   prompt: string;
+  callback: (chatId: string) => void;
 }
 
 const useCombinedMutation = () => {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
   const mutationDialogue = useDialoguesMutation();
   const mutationNewChat = useNewChatMutation();
 
-  const addNewChat = ({ modelId, prompt }: AddNewChatPropsType) => {
+  const addNewChat = ({ modelId, prompt, callback }: AddNewChatPropsType) => {
     mutationNewChat.mutate(
       { modelId },
       {
@@ -25,9 +24,10 @@ const useCombinedMutation = () => {
           mutationDialogue.mutate(
             { chatId: newChatId, prompt },
             {
-              onSuccess: (data) => {
+              onSuccess: (data, variables) => {
                 queryClient.invalidateQueries({ queryKey: ['chats'] });
-                navigate(`/${newChatId}`);
+
+                callback(variables.chatId);
 
                 return data;
               },
