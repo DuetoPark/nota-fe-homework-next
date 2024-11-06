@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -5,6 +6,7 @@ import useModelsQuery from '@/hooks/queries/useModelsQuery';
 import useChatQuery from '@/hooks/queries/useChatQuery';
 import useCombinedMutation from '@/hooks/queries/useCombinedMutation';
 import { useChatStore } from '@/store/chat';
+import useChatId from '@/hooks/useChatId';
 import {
   CHAT_ID_INIT,
   DIALOGUES_INIT,
@@ -16,14 +18,13 @@ import type { DialogueType } from '@/models/chat';
 
 import Button from '@/components/atoms/Button';
 import Textarea from '@/components/atoms/Textarea';
-import ModelSelect from '../ModelSelect';
-import Dialoguelist from '../DialogList';
+import ModelSelect from './ModelSelect';
+import Dialoguelist from './DialogList';
 
-interface ChatDetailPropsType {
-  chatId: string;
-}
+type SectionPropsType = HTMLAttributes<HTMLDivElement>;
 
-const ChatDetail = ({ chatId }: ChatDetailPropsType) => {
+const ChatBoxSection = ({ ...props }: SectionPropsType) => {
+  const { chatId } = useChatId();
   const navigate = useNavigate();
   const { click } = useChatStore();
 
@@ -87,7 +88,9 @@ const ChatDetail = ({ chatId }: ChatDetailPropsType) => {
   }, []);
 
   return (
-    <div>
+    <section {...props}>
+      <h2>ChatBox</h2>
+
       {modelsQueryIsLoading && <p>모델 리스트를 호출중입니다.</p>}
       {modelsQuery && (
         <ModelSelect
@@ -119,8 +122,8 @@ const ChatDetail = ({ chatId }: ChatDetailPropsType) => {
           프롬프트 보내기
         </Button>
       </form>
-    </div>
+    </section>
   );
 };
 
-export default ChatDetail;
+export default ChatBoxSection;

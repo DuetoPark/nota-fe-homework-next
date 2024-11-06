@@ -6,9 +6,9 @@ import { useChatStore } from '@/store/chat';
 import AddChatButton from './AddChatButton';
 import ChatList from './ChatList';
 
-type ChatListSectionPropsType = HTMLAttributes<HTMLDivElement>;
+type SectionPropsType = HTMLAttributes<HTMLDivElement>;
 
-const ChatListSection = ({ ...props }: ChatListSectionPropsType) => {
+const ChatListSection = ({ ...props }: SectionPropsType) => {
   const navigate = useNavigate();
   const { setClick } = useChatStore();
   const { isLoading, data: chatsQuery } = useChatsQuery();
