@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import useChatsQuery from '@/hooks/queries/useChatsQuery';
 import { useChatStore } from '@/store/chat';
+
 import Button from '@/components/atoms/Button';
 import ChatDetail from './components/chatDetail';
 import ChatList from './components/chatList';
 
 const Chat = () => {
-  const { setClick } = useChatStore();
   const navigate = useNavigate();
+  const { setClick } = useChatStore();
 
   const { isLoading, data: chatsQuery } = useChatsQuery();
 
@@ -36,7 +37,9 @@ const Chat = () => {
         )}
       </section>
 
-      <ChatDetail />
+      <section>
+        <ChatDetail />
+      </section>
     </div>
   );
 };
