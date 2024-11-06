@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { createChat } from '@/apis/chat';
 import useModelsQuery from '@/hooks/queries/useModelsQuery';
 import useChatQuery from '@/hooks/queries/useChatQuery';
-import useDialoguesMutation from '@/hooks/queries/useDialogueMutation';
+import useCombinedMutation from '@/hooks/queries/useCombinedMutation';
 import { useChatStore } from '@/store/chat';
-import { DIALOGUES_INIT, MODEL_INIT, NEW_CHAT_ID, PROMPT_INIT } from '../../constants';
+import { CHAT_ID_INIT, DIALOGUES_INIT, MODEL_ID_INIT, PROMPT_INIT } from '../../constants';
 import type { DialogueType } from '@/models/chat';
 
 import Button from '@/components/atoms/Button';
@@ -17,22 +16,23 @@ import Dialoguelist from './DialogList';
 const ChatDetail = () => {
   const navigate = useNavigate();
   const { chatId } = useParams();
-
-  const [model, setModel] = useState<string>(MODEL_INIT);
-  const [message, setMessage] = useState<string>(PROMPT_INIT);
-  const [dialogues, setDialogues] = useState<DialogueType[] | null>(DIALOGUES_INIT);
   const { click } = useChatStore();
 
-  const { isLoading: chatIsLoading, data: chatQuery } = useChatQuery(chatId ?? NEW_CHAT_ID);
+  const [model, setModel] = useState<string>(MODEL_ID_INIT);
+  const [message, setMessage] = useState<string>(PROMPT_INIT);
+  const [dialogues, setDialogues] = useState<DialogueType[] | null>(DIALOGUES_INIT);
+
+  const { isLoading: chatIsLoading, data: chatQuery } = useChatQuery(chatId ?? CHAT_ID_INIT);
   const { isLoading: modelsQueryIsLoading, data: modelsQuery } = useModelsQuery();
-  const { isPending: dialogueIsPending, mutate: addDialogue } = useDialoguesMutation();
+  const { addNewChat, mutationDialogue } = useCombinedMutation();
 
   // 대화 추가
   const addNewDialogue = () => {
     if (!message.trim()) return;
 
+    // 기존 채팅에 대화 추가
     if (chatId) {
-      addDialogue(
+      mutationDialogue.mutate(
         { prompt: message, chatId },
         {
           onSuccess(data) {
@@ -43,29 +43,15 @@ const ChatDetail = () => {
       );
     }
 
+    // 새 채팅 추가
     if (!chatId) {
-      createChat(model)
-        .then((res) => res.at(-1)?.chat_id)
-        .then((newChatId) => {
-          addDialogue(
-            { prompt: message, chatId: newChatId },
-            {
-              onSuccess(data) {
-                navigate(`/${newChatId}`);
-              },
-            },
-          );
-          // addDialogue(newChatId, message) //
-          //   .then((res) => {
-          //     navigate(`/${newChatId}`);
-          //   });
-        });
+      addNewChat({ modelId: model, prompt: message });
     }
   };
 
   // 추가하기 버튼 클릭할 때
   useEffect(() => {
-    setModel(MODEL_INIT);
+    setModel('new');
     setMessage(PROMPT_INIT);
   }, [click]);
 
@@ -77,7 +63,7 @@ const ChatDetail = () => {
     }
   }, [chatQuery]);
 
-  // 채팅방 이동시, 프롬프트 초기화
+  // 채팅방 이동할 때
   useEffect(() => {
     if (!chatId) {
       setDialogues(DIALOGUES_INIT);
@@ -85,6 +71,11 @@ const ChatDetail = () => {
 
     setMessage(PROMPT_INIT);
   }, [chatId]);
+
+  // 페이지 첫 진입
+  useEffect(() => {
+    setModel('');
+  }, []);
 
   return (
     <div>
@@ -105,11 +96,10 @@ const ChatDetail = () => {
 
       {chatIsLoading && <p>대화 내역을 호출중입니다.</p>}
       {dialogues && <Dialoguelist dialogueList={dialogues} />}
-      {dialogueIsPending && <p>"{message}"에 대한 답변을 생성중입니다.</p>}
+      {mutationDialogue.isPending && <p>"{message}"에 대한 답변을 생성중입니다.</p>}
 
       <form action="">
         <Textarea
-          name=""
           value={message}
           onTextInput={(message) => {
             setMessage(message);
