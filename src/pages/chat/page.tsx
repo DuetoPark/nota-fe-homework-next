@@ -1,13 +1,15 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useChatsQuery from '@/hooks/queries/useChatsQuery';
 import { useChatStore } from '@/store/chat';
+import { CHAT_ID_INIT } from './constants';
 
-import ChatDetail from './components/chatDetail';
-import ChatList from './components/chatList';
+import ChatDetail from './components/ChatDetail';
+import ChatList from './components/ChatList';
 import AddChatButton from './components/AddChatButton';
 
 const Chat = () => {
   const navigate = useNavigate();
+  const { chatId } = useParams();
   const { setClick } = useChatStore();
 
   const { isLoading, data: chatsQuery } = useChatsQuery();
@@ -37,7 +39,9 @@ const Chat = () => {
       </section>
 
       <section>
-        <ChatDetail />
+        <h2>ChatDetail</h2>
+
+        <ChatDetail chatId={chatId ?? CHAT_ID_INIT} />
       </section>
     </div>
   );

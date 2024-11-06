@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import useModelsQuery from '@/hooks/queries/useModelsQuery';
 import useChatQuery from '@/hooks/queries/useChatQuery';
@@ -16,12 +16,15 @@ import type { DialogueType } from '@/models/chat';
 
 import Button from '@/components/atoms/Button';
 import Textarea from '@/components/atoms/Textarea';
-import ModelSelect from './ModelSelect';
-import Dialoguelist from './DialogList';
+import ModelSelect from '../ModelSelect';
+import Dialoguelist from '../DialogList';
 
-const ChatDetail = () => {
+interface ChatDetailPropsType {
+  chatId: string;
+}
+
+const ChatDetail = ({ chatId }: ChatDetailPropsType) => {
   const navigate = useNavigate();
-  const { chatId } = useParams();
   const { click } = useChatStore();
 
   const [model, setModel] = useState<string>(MODEL_ID_INIT);
@@ -80,13 +83,11 @@ const ChatDetail = () => {
 
   // 페이지 첫 진입
   useEffect(() => {
-    setModel('');
+    setModel(MODEL_ID_INIT);
   }, []);
 
   return (
     <div>
-      <h2>ChatDetail</h2>
-
       {modelsQueryIsLoading && <p>모델 리스트를 호출중입니다.</p>}
       {modelsQuery && (
         <ModelSelect
