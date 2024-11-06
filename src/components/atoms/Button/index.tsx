@@ -6,7 +6,7 @@ import styles from './button.module.css';
 
 const cx = classNames.bind(styles);
 
-interface ButtonAttrProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'color'> {
+export interface ButtonAttrProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'color'> {
   disabled?: boolean;
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
   children: ReactNode;

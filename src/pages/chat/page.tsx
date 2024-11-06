@@ -2,9 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import useChatsQuery from '@/hooks/queries/useChatsQuery';
 import { useChatStore } from '@/store/chat';
 
-import Button from '@/components/atoms/Button';
 import ChatDetail from './components/chatDetail';
 import ChatList from './components/chatList';
+import AddChatButton from './components/AddChatButton';
 
 const Chat = () => {
   const navigate = useNavigate();
@@ -17,14 +17,13 @@ const Chat = () => {
       <section>
         <h2>ChatList</h2>
 
-        <Button
+        <AddChatButton
+          className=""
           onClick={() => {
             navigate('/');
             setClick();
           }}
-        >
-          추가하기
-        </Button>
+        />
 
         {isLoading && <p>채팅 리스트를 불러오는 중입니다.</p>}
         {chatsQuery && (
