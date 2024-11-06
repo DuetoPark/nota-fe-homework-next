@@ -5,7 +5,13 @@ import useModelsQuery from '@/hooks/queries/useModelsQuery';
 import useChatQuery from '@/hooks/queries/useChatQuery';
 import useCombinedMutation from '@/hooks/queries/useCombinedMutation';
 import { useChatStore } from '@/store/chat';
-import { CHAT_ID_INIT, DIALOGUES_INIT, MODEL_ID_INIT, PROMPT_INIT } from '../../constants';
+import {
+  CHAT_ID_INIT,
+  DIALOGUES_INIT,
+  MODEL_ID_INIT,
+  MODEL_ID_NEW,
+  PROMPT_INIT,
+} from '../../constants';
 import type { DialogueType } from '@/models/chat';
 
 import Button from '@/components/atoms/Button';
@@ -51,7 +57,7 @@ const ChatDetail = () => {
 
   // 추가하기 버튼 클릭할 때
   useEffect(() => {
-    setModel('new');
+    setModel(MODEL_ID_NEW);
     setMessage(PROMPT_INIT);
   }, [click]);
 

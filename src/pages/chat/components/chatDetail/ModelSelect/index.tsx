@@ -1,21 +1,31 @@
 import { SelectHTMLAttributes, useEffect, useState } from 'react';
 import { Select, Theme } from '@radix-ui/themes';
+import { MODEL_ID_NEW } from '@/pages/chat/constants';
 import type { ModelDataType } from '@/models/chat';
 
 interface ModelSelectPropsType extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {
   modelList: ModelDataType[];
   onSelectChange?: (modelId: string) => void;
-  modelId?: string;
+  modelId: string;
   name?: string;
 }
 
 const ModelSelect = ({ modelList, modelId, onSelectChange, name }: ModelSelectPropsType) => {
-  const [id, setId] = useState<string>(modelId ?? modelList[0].chat_model_id);
+  const [id, setId] = useState<string>(modelId);
 
+  // 상위 컴포넌트에서 modelId를 바꾼 경우
   useEffect(() => {
-    if (!modelId) return;
+    if (modelId === MODEL_ID_NEW) {
+      const firstModelId = modelList[0].chat_model_id;
+      setId(firstModelId);
 
-    setId(modelId);
+      // 상위 컴포넌트의 modelId 바꿔주기
+      if (onSelectChange) {
+        onSelectChange(firstModelId);
+      }
+    } else {
+      setId(modelId);
+    }
   }, [modelId]);
 
   // empty
