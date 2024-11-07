@@ -1,6 +1,8 @@
 import { SelectHTMLAttributes, useEffect, useState } from 'react';
 import { Select, Theme } from '@radix-ui/themes';
+
 import { MODEL_ID_NEW } from '@/pages/chat/constants';
+import Empty from '@/components/query/Empty';
 import type { ModelDataType } from '@/models/chat';
 
 interface ModelSelectPropsType extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {
@@ -29,7 +31,9 @@ const ModelSelect = ({ modelList, modelId, onSelectChange, name }: ModelSelectPr
   }, [modelId]);
 
   // empty
-  if (modelList.length === 0) return <p>모델 리스트가 없습니다.</p>;
+  if (modelList.length === 0) {
+    return <Empty className="">등록된 모델이 없습니다.</Empty>;
+  }
 
   return (
     <Theme>

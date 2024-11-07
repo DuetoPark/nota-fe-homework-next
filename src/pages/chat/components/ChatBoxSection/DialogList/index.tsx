@@ -13,7 +13,7 @@ interface DialogueListPropsType {
 const cx = classNames.bind(styles);
 
 const Dialoguelist = ({ dialogueList }: DialogueListPropsType) => {
-  if (dialogueList.length === 0) return <p>대화 목록이 없습니다.</p>;
+  // NOTE: empty인 경우 없음(채팅이 추가되는 시점 = 새로운 질문이 제출된 이후)
 
   return (
     <section className={cx('dialogues')}>

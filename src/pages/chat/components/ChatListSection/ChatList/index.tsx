@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 
 import useChatId from '@/hooks/useChatId';
 import Tag from '@/components/atoms/Tag';
+import Empty from '@/components/query/Empty';
 import { CHAT_ID_INIT } from '../../../constants';
 import type { ChatDataType } from '@/models/chat';
 
@@ -23,7 +24,10 @@ const ChatList = ({ chatList, onClick }: ChatListPropsType) => {
     }
   });
 
-  if (chatList.length === 0) return <p>채팅 리스트가 없습니다.</p>;
+  // empty
+  if (chatList.length === 0) {
+    return <Empty>등록된 채팅이 없습니다.</Empty>;
+  }
 
   return (
     <ol className={cx('list')}>
