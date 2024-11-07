@@ -1,0 +1,60 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  width: 100%;
+}
+
+.header {
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 8px;
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  overflow: auto;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  column-gap: 16px;
+  align-items: flex-start;
+}
+
+.textarea {
+  --line-count: 3;
+  --padding: calc(16px * 2);
+  --content: calc(16px * 1.25 * var(--line-count));
+  --textarea-height: calc(var(--padding) + var(--content));
+
+  resize: none;
+  flex-grow: 1;
+  width: 100%;
+  height: var(--textarea-height);
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.textarea::placeholder {
+  color: var(--color-border);
+}
+
+.submit-button {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 140px;
+}
+
+@media screen and (min-width: 768px) {
+  .footer {
+    flex-direction: row;
+  }
+}
