@@ -1,0 +1,33 @@
+.container {
+  position: relative;
+  margin-top: 16px;
+}
+
+.box {
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  height: 70vh;
+}
+
+.list-section {
+  /* overflow: auto; */
+}
+
+/* desktop */
+@media screen and (min-width: 768px) {
+  .container {
+    display: flex;
+    column-gap: 16px;
+    margin-top: 24px;
+  }
+
+  .list-section {
+    flex-shrink: 0;
+    width: 30%;
+  }
+
+  .box-section {
+    flex-grow: 1;
+  }
+}

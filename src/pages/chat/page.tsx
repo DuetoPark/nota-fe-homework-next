@@ -1,12 +1,19 @@
+import classNames from 'classnames/bind';
+
 import ChatListSection from './components/ChatListSection';
 import ChatBoxSection from './components/ChatBoxSection';
+import Container from '@/components/layout/Container';
+
+import styles from './page.module.css';
+
+const cx = classNames.bind(styles);
 
 const Chat = () => {
   return (
-    <div style={{ display: 'flex', columnGap: '24px' }}>
-      <ChatListSection className="" />
-      <ChatBoxSection className="" />
-    </div>
+    <Container className={cx('container')}>
+      <ChatListSection className={cx('box', 'list-section')} />
+      <ChatBoxSection className={cx('box', 'box-section')} />
+    </Container>
   );
 };
 
