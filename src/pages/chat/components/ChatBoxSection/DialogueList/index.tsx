@@ -4,7 +4,7 @@ import type { DialogueType } from '@/models/chat';
 
 import Avatar from '@/components/atoms/Avatar';
 
-import styles from './dialogList.module.css';
+import styles from './dialogueList.module.css';
 
 interface DialogueListPropsType {
   dialogueList: DialogueType[];
