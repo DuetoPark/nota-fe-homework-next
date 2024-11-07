@@ -1,0 +1,119 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+*,
+html,
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+    Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic',
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  letter-spacing: -0.02em;
+  line-height: 150%;
+  vertical-align: baseline;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0;
+  margin: 0;
+  font-weight: 400;
+}
+
+strong {
+  font-weight: 400;
+  color: inherit;
+}
+
+ol,
+ul,
+li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+dl,
+dt,
+dd {
+  color: inherit;
+}
+
+a,
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover,
+a:active,
+a:focus,
+a:visited {
+  text-decoration: none;
+  outline: none;
+}
+
+input,
+textarea,
+button,
+select {
+  padding: 0;
+  color: inherit;
+  background-color: transparent;
+  border: 0;
+}
+
+input:focus,
+textarea:focus,
+button:focus,
+select:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+address {
+  font-style: normal;
+}
+
+i {
+  color: inherit;
+  pointer-events: none;
+}
+
+::-webkit-input-placeholder {
+  color: inherit;
+}
+
+::-moz-input-placeholder {
+  color: inherit;
+}
+
+::-ms-input-placeholder {
+  color: inherit;
+}
