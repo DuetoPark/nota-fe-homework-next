@@ -1,12 +1,13 @@
 import { HTMLAttributes } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CiViewList } from 'react-icons/ci';
+import classNames from 'classnames/bind';
 import useChatsQuery from '@/hooks/queries/useChatsQuery';
 import { useChatStore } from '@/store/chat';
 
+import Loading from '@/components/query/Loading';
 import AddChatButton from './AddChatButton';
 import ChatList from './ChatList';
-import classNames from 'classnames/bind';
 
 import styles from './chatListSection.module.css';
 
@@ -39,7 +40,7 @@ const ChatListSection = ({ className, ...props }: SectionPropsType) => {
       </header>
 
       <div className={cx('content')}>
-        {isLoading && <p>채팅 리스트를 불러오는 중입니다.</p>}
+        {isLoading && <Loading text="채팅 리스트을(를) 불러오는 중입니다." />}
         {chatsQuery && (
           <ChatList
             chatList={chatsQuery}
