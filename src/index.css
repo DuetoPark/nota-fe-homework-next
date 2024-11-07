@@ -11,28 +11,51 @@
 
 /* Color Variables */
 :root {
-  --color-background: #242424;
+  --color-body: #242424;
+
+  --color-background: rgba(255, 255, 255, 0.06);
+  --color-background-dark: rgba(255, 255, 255, 0.12);
   --color-text: rgba(255, 255, 255, 0.87);
+  --color-text-dark: rgba(255, 255, 255, 1);
   --color-border: rgba(255, 255, 255, 0.24);
+  --color-border-dark: rgba(255, 255, 255, 0.45);
+
   --color-brand: #00dcf0;
+  --color-brand-light: rgba(0, 220, 224, 0.15);
+
   --color-blue: #646cff;
+  --color-yellow: #ffd864;
+  --color-red: #ff6964;
+  --color-gray: #d9d8d8;
+  --color-black: #000;
+  --color-white: #fff;
 }
 
 :root.light {
-  --color-background: #ffffff;
+  --color-body: #fff;
+
+  --color-background: rgba(33, 53, 71, 0.06);
+  --color-background-dark: rgba(33, 53, 71, 0.12);
   --color-text: #213547;
+  --color-text-dark: #333;
   --color-border: rgba(33, 53, 71, 0.24);
+  --color-border-dark: rgba(33, 53, 71, 0.35);
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    --color-background: #ffffff;
+    --color-body: #fff;
+
+    --color-background: rgba(33, 53, 71, 0.6);
+    --color-background-dark: rgba(33, 53, 71, 0.12);
     --color-text: #213547;
+    --color-text-dark: #333;
     --color-border: rgba(33, 53, 71, 0.24);
+    --color-border-dark: rgba(33, 53, 71, 0.35);
   }
 }
 
 body {
-  background-color: var(--color-background);
+  background-color: var(--color-body);
   color: var(--color-text);
 }
