@@ -12,7 +12,7 @@ const Textarea = ({ onTextInput, value, ...props }: TextareaPropsType) => {
   const debounceUpdate = useCallback(
     debounce((text) => {
       onTextInput(text);
-    }, 500),
+    }, 200),
     [],
   );
 
