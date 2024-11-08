@@ -1,9 +1,12 @@
 import { SelectHTMLAttributes, useEffect, useState } from 'react';
 import { Select, Theme } from '@radix-ui/themes';
+import classNames from 'classnames/bind';
 
 import { MODEL_ID_NEW } from '@/pages/chat/constants';
 import Empty from '@/components/query/Empty';
 import type { ModelDataType } from '@/models/chat';
+
+import styles from './modelSelect.module.css';
 
 interface ModelSelectPropsType extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {
   modelList: ModelDataType[];
@@ -11,6 +14,8 @@ interface ModelSelectPropsType extends Omit<SelectHTMLAttributes<HTMLSelectEleme
   modelId: string;
   name?: string;
 }
+
+const cx = classNames.bind(styles);
 
 const ModelSelect = ({ modelList, modelId, onSelectChange, name }: ModelSelectPropsType) => {
   const [id, setId] = useState<string>(modelId);
@@ -48,13 +53,20 @@ const ModelSelect = ({ modelList, modelId, onSelectChange, name }: ModelSelectPr
           onSelectChange(selectedId);
         }}
       >
-        <Select.Trigger />
+        <Select.Trigger
+          className={cx('SelectTrigger')}
+          placeholder="모델을 선택해주세요"
+        ></Select.Trigger>
 
-        <Select.Content>
+        <Select.Content className={cx('SelectContent')}>
           <Select.Group>
             {modelList &&
               modelList.map((model) => (
-                <Select.Item key={model.chat_model_id} value={model.chat_model_id}>
+                <Select.Item
+                  className={cx('SelectItem')}
+                  key={model.chat_model_id}
+                  value={model.chat_model_id}
+                >
                   {model.chat_model_name}
                 </Select.Item>
               ))}
