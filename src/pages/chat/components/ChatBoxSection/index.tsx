@@ -84,7 +84,9 @@ const ChatBoxSection = ({ className, chatId }: SectionPropsType) => {
       <ScrollToBottom className={cx('content')}>
         {chatIsLoading && <Loading text="대화 내역을(를) 불러오는 중입니다." />}
         {!chatIsLoading && dialogues && <Dialoguelist dialogueList={dialogues} />}
-        {mutationDialogue.isPending && <Loading text={`${message}에 대한 답변을 생성중입니다.`} />}
+        {mutationDialogue.isPending && (
+          <Loading color="blue" text={`${message}에 대한 답변을 생성중입니다.`} />
+        )}
       </ScrollToBottom>
 
       <footer className={cx('footer')}>

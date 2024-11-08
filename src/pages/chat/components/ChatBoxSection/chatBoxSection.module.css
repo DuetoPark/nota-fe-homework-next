@@ -41,10 +41,20 @@
   border-radius: 8px;
   font-size: 16px;
   font-weight: 500;
+  transition: all 150ms ease-in-out;
+}
+
+.textarea:not(:disabled):focus {
+  border-color: var(--color-brand);
 }
 
 .textarea::placeholder {
   color: var(--color-border);
+}
+
+.textarea:disabled {
+  background-color: var(--color-background-dark);
+  cursor: not-allowed;
 }
 
 .submit-button {
