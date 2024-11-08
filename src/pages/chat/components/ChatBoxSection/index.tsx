@@ -4,6 +4,7 @@ import classNames from 'classnames/bind';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import useChatData from '@/hooks/useChatData';
 import { useChatStore } from '@/store/chat';
+import { sliceText } from '@/utils/format';
 import { DIALOGUES_INIT, MODEL_ID_INIT, MODEL_ID_NEW, PROMPT_INIT } from '../../constants';
 
 import Button from '@/components/atoms/Button';
@@ -85,7 +86,7 @@ const ChatBoxSection = ({ className, chatId }: SectionPropsType) => {
         {chatIsLoading && <Loading text="대화 내역을(를) 불러오는 중입니다." />}
         {!chatIsLoading && dialogues && <Dialoguelist dialogueList={dialogues} />}
         {mutationDialogue.isPending && (
-          <Loading color="blue" text={`${message}에 대한 답변을 생성중입니다.`} />
+          <Loading color="blue" text={`${sliceText(message, 30)}에 대한 답변을 생성중입니다.`} />
         )}
       </ScrollToBottom>
 
