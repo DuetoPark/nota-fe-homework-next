@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
-import ScrollToBottom from 'react-scroll-to-bottom';
+import ScrollableFeed from 'react-scrollable-feed';
 import useChatData from '@/hooks/useChatData';
 import { useChatStore } from '@/store/chat';
 import { sliceText } from '@/utils/format';
@@ -82,13 +82,13 @@ const ChatBoxSection = ({ className, chatId }: SectionPropsType) => {
         )}
       </header>
 
-      <ScrollToBottom className={cx('content')}>
+      <ScrollableFeed className={cx('content')}>
         {chatIsLoading && <Loading text="대화 내역을(를) 불러오는 중입니다." />}
         {!chatIsLoading && dialogues && <Dialoguelist dialogueList={dialogues} />}
         {mutationDialogue.isPending && (
           <Loading color="blue" text={`${sliceText(message, 30)}에 대한 답변을 생성중입니다.`} />
         )}
-      </ScrollToBottom>
+      </ScrollableFeed>
 
       <footer className={cx('footer')}>
         <Textarea

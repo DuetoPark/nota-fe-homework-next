@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CiViewList } from 'react-icons/ci';
 import classNames from 'classnames/bind';
-import ScrollToBottom from 'react-scroll-to-bottom';
+import ScrollableFeed from 'react-scrollable-feed';
 import useChatsQuery from '@/hooks/queries/useChatsQuery';
 import { useChatStore } from '@/store/chat';
 
@@ -45,7 +45,7 @@ const ChatListSection = ({ className, chatId }: SectionPropsType) => {
         <AddChatButton className="" onClick={() => newChatHandler()} />
       </header>
 
-      <ScrollToBottom className={cx('content')}>
+      <ScrollableFeed className={cx('content')}>
         {isLoading && <Loading text="채팅 리스트을(를) 불러오는 중입니다." />}
         {chatsQuery && (
           <ChatList
@@ -54,7 +54,7 @@ const ChatListSection = ({ className, chatId }: SectionPropsType) => {
             onClick={(currentId) => movePageAndChangeChatId(currentId)}
           />
         )}
-      </ScrollToBottom>
+      </ScrollableFeed>
     </section>
   );
 };
