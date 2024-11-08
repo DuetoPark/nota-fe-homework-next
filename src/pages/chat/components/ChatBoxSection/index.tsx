@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import useChatData from '@/hooks/useChatData';
 import { useChatStore } from '@/store/chat';
-import { MODEL_ID_INIT, MODEL_ID_NEW } from '../../constants';
+import { DIALOGUES_INIT, MODEL_ID_INIT, MODEL_ID_NEW, PROMPT_INIT } from '../../constants';
 
 import Button from '@/components/atoms/Button';
 import Textarea from '@/components/atoms/Textarea';
@@ -23,29 +23,44 @@ const cx = classNames.bind(styles);
 
 const ChatBoxSection = ({ className, chatId }: SectionPropsType) => {
   const navigate = useNavigate();
-  const { click } = useChatStore();
+  const { click, setChatId } = useChatStore();
   const {
     model,
     message,
     dialogues,
+    chatQuery,
     modelsQuery,
     chatIsLoading,
     modelsQueryIsLoading,
     addNewDialogue,
     setModel,
     setMessage,
+    setDialogues,
     mutationDialogue,
   } = useChatData(chatId);
 
-  // 추가하기 버튼 클릭할 때
+  // 모델 ID 초기화 및 설정
   useEffect(() => {
-    setModel(MODEL_ID_NEW);
+    setModel(click ? MODEL_ID_NEW : MODEL_ID_INIT);
   }, [click]);
 
-  // 페이지 마운트
+  // NOTE: 채팅 데이터와 모델 정보 로드
   useEffect(() => {
-    setModel(MODEL_ID_INIT);
-  }, []);
+    if (!chatQuery) return;
+
+    setModel(chatQuery.chat_model_id);
+    setDialogues(chatQuery.dialogues);
+  }, [chatQuery]);
+
+  // NOTE: 모델과 메세지 리셋
+  useEffect(() => {
+    // 새 채팅
+    if (!chatId) {
+      setDialogues(DIALOGUES_INIT);
+    }
+
+    setMessage(PROMPT_INIT);
+  }, [model, chatId]);
 
   return (
     <section className={cx('section', className)}>
@@ -59,6 +74,7 @@ const ChatBoxSection = ({ className, chatId }: SectionPropsType) => {
             modelId={model}
             onSelectChange={(selectedModelId) => {
               navigate('/');
+              setChatId('');
               setModel(selectedModelId);
             }}
           />

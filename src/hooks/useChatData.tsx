@@ -11,6 +11,7 @@ import { useShallow } from 'zustand/shallow';
 const useChatData = (chatId?: string) => {
   const navigate = useNavigate();
   const { setChatId } = useChatStore(useShallow((state) => state));
+
   const [model, setModel] = useState<string>(MODEL_ID_INIT);
   const [message, setMessage] = useState<string>(PROMPT_INIT);
   const [dialogues, setDialogues] = useState<DialogueType[] | null>(DIALOGUES_INIT);
@@ -37,7 +38,7 @@ const useChatData = (chatId?: string) => {
         },
       );
     } else {
-      // 새 치팅
+      // 새 채팅
       addNewChat({
         modelId: model,
         prompt: message,
@@ -49,28 +50,11 @@ const useChatData = (chatId?: string) => {
     }
   };
 
-  // NOTE: 업데이트
-  useEffect(() => {
-    if (!chatQuery) return;
-
-    setModel(chatQuery.chat_model_id);
-    setDialogues(chatQuery.dialogues);
-  }, [chatQuery]);
-
-  // NOTE: 리셋
-  useEffect(() => {
-    // 새 채팅
-    if (!chatId) {
-      setDialogues(DIALOGUES_INIT);
-    }
-
-    setMessage(PROMPT_INIT);
-  }, [model, chatId]);
-
   return {
     model,
     message,
     dialogues,
+    chatQuery,
     modelsQuery,
     chatIsLoading,
     modelsQueryIsLoading,
