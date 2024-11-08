@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CiViewList } from 'react-icons/ci';
 import classNames from 'classnames/bind';
@@ -11,32 +11,37 @@ import ChatList from './ChatList';
 
 import styles from './chatListSection.module.css';
 
-interface SectionPropsType extends HTMLAttributes<HTMLDivElement> {
+interface SectionPropsType {
   className?: string;
+  chatId: string;
 }
 
 const cx = classNames.bind(styles);
 
-const ChatListSection = ({ className, ...props }: SectionPropsType) => {
+const ChatListSection = ({ className, chatId }: SectionPropsType) => {
   const navigate = useNavigate();
-  const { setClick } = useChatStore();
+  const { setClick, setChatId } = useChatStore();
   const { isLoading, data: chatsQuery } = useChatsQuery();
 
+  const movePageAndChangeChatId = useCallback((chatId: string) => {
+    navigate(`/${chatId}`);
+    setChatId(chatId);
+  }, []);
+
+  const newChatHandler = useCallback(() => {
+    movePageAndChangeChatId('');
+    setClick();
+  }, []);
+
   return (
-    <section className={cx('section', className)} {...props}>
+    <section className={cx('section', className)}>
       <header className={cx('header')}>
         <h2 className={cx('title')}>
           <CiViewList aria-hidden />
           채팅 목록
         </h2>
 
-        <AddChatButton
-          className=""
-          onClick={() => {
-            navigate('/');
-            setClick();
-          }}
-        />
+        <AddChatButton className="" onClick={() => newChatHandler()} />
       </header>
 
       <div className={cx('content')}>
@@ -44,9 +49,8 @@ const ChatListSection = ({ className, ...props }: SectionPropsType) => {
         {chatsQuery && (
           <ChatList
             chatList={chatsQuery}
-            onClick={(currentId) => {
-              navigate(`/${currentId}`);
-            }}
+            chatId={chatId}
+            onClick={(currentId) => movePageAndChangeChatId(currentId)}
           />
         )}
       </div>

@@ -5,10 +5,12 @@ import useChatQuery from './queries/useChatQuery';
 import useModelsQuery from './queries/useModelsQuery';
 import useCombinedMutation from './queries/useCombinedMutation';
 import { useNavigate } from 'react-router-dom';
+import { useChatStore } from '@/store/chat';
+import { useShallow } from 'zustand/shallow';
 
 const useChatData = (chatId?: string) => {
   const navigate = useNavigate();
-
+  const { setChatId } = useChatStore(useShallow((state) => state));
   const [model, setModel] = useState<string>(MODEL_ID_INIT);
   const [message, setMessage] = useState<string>(PROMPT_INIT);
   const [dialogues, setDialogues] = useState<DialogueType[] | null>(DIALOGUES_INIT);
@@ -41,6 +43,7 @@ const useChatData = (chatId?: string) => {
         prompt: message,
         callback: (newChatId) => {
           navigate(`/${newChatId}`);
+          setChatId(newChatId);
         },
       });
     }

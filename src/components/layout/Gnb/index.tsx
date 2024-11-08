@@ -1,24 +1,28 @@
-import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
-import { IoChatboxEllipsesOutline } from 'react-icons/io5';
-import { FaGithub } from 'react-icons/fa';
+import { useShallow } from 'zustand/shallow';
+import { useChatStore } from '@/store/chat';
+import { CHAT_ID_INIT } from '@/pages/chat/constants';
 
-import Container from '../Container';
-import styles from './gnb.module.css';
 import { Box } from '@radix-ui/themes';
+import { FaGithub } from 'react-icons/fa';
+import Container from '../Container';
+import Logo from '../Logo';
+
+import styles from './gnb.module.css';
 
 const cx = classNames.bind(styles);
 
 const Gnb = () => {
+  const { setChatId } = useChatStore(useShallow((state) => state));
+
   return (
     <header className={cx('gnb')}>
       <Container className={cx('container')}>
-        <h1 className={cx('logo')}>
-          <Link to="/">
-            Nota Chat
-            <IoChatboxEllipsesOutline className={cx('icon')} aria-hidden />
-          </Link>
-        </h1>
+        <Logo
+          onClick={() => {
+            setChatId(CHAT_ID_INIT);
+          }}
+        />
 
         <Box className={cx('link-box')}>
           <a

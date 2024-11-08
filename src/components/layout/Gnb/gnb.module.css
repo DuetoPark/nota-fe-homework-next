@@ -17,23 +17,6 @@
   height: 100%;
 }
 
-.logo {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--color-brand);
-  white-space: nowrap;
-}
-
-.logo a {
-  display: flex;
-  align-items: center;
-  column-gap: 8px;
-}
-
-.logo .icon {
-  color: var(--color-text);
-}
-
 .icon {
   font-size: 24px;
 }

@@ -1,0 +1,14 @@
+.logo {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-brand);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.logo .icon {
+  color: var(--color-text);
+}

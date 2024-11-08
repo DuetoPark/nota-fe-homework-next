@@ -1,11 +1,9 @@
-import { HTMLAttributes } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import useChatData from '@/hooks/useChatData';
 import { useChatStore } from '@/store/chat';
-import useChatId from '@/hooks/useChatId';
 import { MODEL_ID_INIT, MODEL_ID_NEW } from '../../constants';
 
 import Button from '@/components/atoms/Button';
@@ -16,15 +14,15 @@ import Dialoguelist from './DialogueList';
 
 import styles from './chatBoxSection.module.css';
 
-interface SectionPropsType extends HTMLAttributes<HTMLDivElement> {
+interface SectionPropsType {
   className?: string;
+  chatId: string;
 }
 
 const cx = classNames.bind(styles);
 
-const ChatBoxSection = ({ className, ...props }: SectionPropsType) => {
+const ChatBoxSection = ({ className, chatId }: SectionPropsType) => {
   const navigate = useNavigate();
-  const { chatId } = useChatId();
   const { click } = useChatStore();
   const {
     model,
@@ -50,7 +48,7 @@ const ChatBoxSection = ({ className, ...props }: SectionPropsType) => {
   }, []);
 
   return (
-    <section className={cx('section', className)} {...props}>
+    <section className={cx('section', className)}>
       <header className={cx('header')}>
         <h2 className="visually-hidden">채팅창</h2>
 
