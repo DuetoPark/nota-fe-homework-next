@@ -7,6 +7,7 @@ import { useChatStore } from '@/store/chat';
 import { sliceText } from '@/utils/format';
 import { DIALOGUES_INIT, MODEL_ID_INIT, MODEL_ID_NEW, PROMPT_INIT } from '../../constants';
 
+import { FaArrowDown } from 'react-icons/fa6';
 import Button from '@/components/atoms/Button';
 import Textarea from '@/components/atoms/Textarea';
 import Loading from '@/components/query/Loading';
@@ -14,6 +15,7 @@ import ModelSelect from './ModelSelect';
 import Dialoguelist from './DialogueList';
 
 import styles from './chatBoxSection.module.css';
+import useScrollToBottom from '@/hooks/useScrollToBottom';
 
 interface SectionPropsType {
   className?: string;
@@ -24,6 +26,7 @@ const cx = classNames.bind(styles);
 
 const ChatBoxSection = ({ className, chatId }: SectionPropsType) => {
   const navigate = useNavigate();
+  const { scrollRef, isAtBottom, handleScroll, scrollToBottom } = useScrollToBottom();
   const { click, setChatId } = useChatStore();
   const {
     model,
@@ -82,11 +85,27 @@ const ChatBoxSection = ({ className, chatId }: SectionPropsType) => {
         )}
       </header>
 
-      <ScrollableFeed className={cx('content')}>
+      <ScrollableFeed
+        className={cx('content')}
+        ref={scrollRef}
+        onScroll={(isAtBottom) => handleScroll(isAtBottom)}
+      >
         {chatIsLoading && <Loading text="대화 내역을(를) 불러오는 중입니다." />}
         {!chatIsLoading && dialogues && <Dialoguelist dialogueList={dialogues} />}
         {mutationDialogue.isPending && (
           <Loading color="blue" text={`${sliceText(message, 30)}에 대한 답변을 생성중입니다.`} />
+        )}
+
+        {!isAtBottom && (
+          <div className={cx('scroll-button-wrapper')}>
+            <button
+              className={cx('scroll-button')}
+              onClick={() => scrollToBottom()}
+              aria-label="스크롤 아래로"
+            >
+              <FaArrowDown aria-hidden />
+            </button>
+          </div>
         )}
       </ScrollableFeed>
 

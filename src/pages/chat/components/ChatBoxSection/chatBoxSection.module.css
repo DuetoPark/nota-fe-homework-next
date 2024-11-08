@@ -11,6 +11,7 @@
 }
 
 .content {
+  position: relative;
   flex-grow: 1;
   padding: 8px;
   border-radius: 16px;
@@ -20,6 +21,27 @@
 
 .content::-webkit-scrollbar {
   display: none !important;
+}
+
+.scroll-button-wrapper {
+  position: sticky;
+  bottom: 24px;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+}
+
+.scroll-button {
+  --button-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--button-size);
+  height: var(--button-size);
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  font-size: 16px;
 }
 
 .footer {
