@@ -18,6 +18,10 @@
   overflow: auto;
 }
 
+.content::-webkit-scrollbar {
+  display: none !important;
+}
+
 .footer {
   display: flex;
   flex-direction: column;

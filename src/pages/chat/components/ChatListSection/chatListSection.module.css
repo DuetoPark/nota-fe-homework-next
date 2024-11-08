@@ -26,3 +26,7 @@
   padding: 16px 0;
   overflow: auto;
 }
+
+.content::-webkit-scrollbar {
+  display: none !important;
+}
